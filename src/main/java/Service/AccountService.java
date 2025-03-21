@@ -19,7 +19,7 @@ public class AccountService {
      * Logger instance for logging information, warnings, and errors in the SocialMediaController class.
      * Utilizes SLF4J to log relevant actions, including method entries, business decisions, and error handling.
      */
-    private static final Logger LOGGER = LoggerFactory.getLogger(AccountService.class); // Logger for AccountService
+    private static final Logger LOGGER = LoggerFactory.getLogger(AccountService.class);
 
     /**
      * Data Access Object (DAO) for handling account-related database operations.
@@ -37,7 +37,7 @@ public class AccountService {
      * Constructor that accepts a pre-configured AccountDAO instance.
      * Useful for dependency injection, particularly in testing scenarios.
      * 
-     * @param accountDAO The AccountDAO instance to be used by this service
+     * @param accountDAO The AccountDAO instance to be used by this service.
      */
     public AccountService(AccountDAO accountDAO) {
         this.accountDAO = accountDAO;
@@ -49,21 +49,19 @@ public class AccountService {
      * - The account object is null
      * - The username is blank
      * - The password is less than 4 characters long
-     * - An account with the same username and password already exists
+     * - An account with the same username and password already exists.
      * 
-     * @param account The Account object containing the details of the account to be created
-     * @return An Optional containing the created Account if successful, or an empty Optional if validation fails
+     * @param account The Account object containing the details of the account to be created.
+     * @return An Optional containing the created Account if successful, or an empty Optional if validation fails.
      */
     public Optional<Account> createAccount(Account account) {
         LOGGER.info("Received request to create a new account - AccountService.createAccount(Account account) method");
 
-        // Check if the account is null
         if (account == null) {
             LOGGER.warn("Account object is null. Account creation failed - AccountService.createAccount(Account account) method");
             return Optional.empty();
         }
 
-        // Check if username is blank or password is too short
         if (account.getUsername().isBlank()) {
             LOGGER.warn("Username is blank. Account creation failed - AccountService.createAccount(Account account) method");
             return Optional.empty();
@@ -74,13 +72,11 @@ public class AccountService {
             return Optional.empty();
         }
 
-        // Check if an account with the same username and password already exists
         if (accountDAO.getAccountByUsernameAndPassword(account).isPresent()) {
             LOGGER.warn("An account with the same username and password already exists. Account creation failed - AccountService.createAccount(Account account) method");
             return Optional.empty();
         }
 
-        // Attempt to create the account
         Optional<Account> createdAccountOptional = accountDAO.createAccount(account);
         if (createdAccountOptional.isEmpty()) {
             LOGGER.warn("Account creation failed in DAO layer for account: {} - AccountService.createAccount(Account account) method", account.getUsername());
@@ -93,13 +89,12 @@ public class AccountService {
     /**
      * Attempts to authenticate an account using the provided credentials.
      * 
-     * @param account The Account object containing the username and password to authenticate
-     * @return An Optional containing the authenticated Account if successful, or an empty Optional if authentication fails
+     * @param account The Account object containing the username and password to authenticate.
+     * @return An Optional containing the authenticated Account if successful, or an empty Optional if authentication fails.
      */
     public Optional<Account> loginAccount(Account account) {
         LOGGER.info("Received request to authenticate account - AccountService.loginAccount(Account account) method");
 
-        // Check if the account is null
         if (account == null) {
             LOGGER.warn("Account object is null. Authentication failed - AccountService.loginAccount(Account account) method");
             return Optional.empty();
@@ -119,8 +114,8 @@ public class AccountService {
     /**
      * Retrieves an account by its unique identifier.
      * 
-     * @param accountId The ID of the account to retrieve
-     * @return An Optional containing the Account if found, or an empty Optional if no account exists with the given ID
+     * @param accountId The ID of the account to retrieve.
+     * @return An Optional containing the Account if found, or an empty Optional if no account exists with the given ID.
      */
     public Optional<Account> getUserById(int accountId) {
         LOGGER.info("Received request to retrieve account with ID: {} - AccountService.getUserById() method", accountId);
@@ -135,7 +130,7 @@ public class AccountService {
     /**
      * Retrieves all accounts in the system.
      * 
-     * @return An Optional containing a List of all Accounts if successful, or an empty Optional if retrieval fails
+     * @return An Optional containing a List of all Accounts if successful, or an empty Optional if retrieval fails.
      */
     public Optional<List<Account>> getAllAccounts() {
         LOGGER.info("Received request to retrieve all accounts - AccountService.getAllAccounts() method");

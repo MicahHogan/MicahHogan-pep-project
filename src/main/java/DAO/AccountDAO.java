@@ -231,7 +231,7 @@ public class AccountDAO {
                 String username = resultSet.getString("username");
                 String password = resultSet.getString("password");
                 Account foundAccount = new Account(account_id, username, password);
-                return Optional.of(foundAccount);  // Return the account wrapped in Optional
+                return Optional.of(foundAccount);
             }
         } catch (SQLException exception) {
             String sqlState = exception.getSQLState();

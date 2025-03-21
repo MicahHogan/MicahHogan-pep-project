@@ -20,7 +20,7 @@ public class MessageService {
      * Logger instance for logging information, warnings, and errors in the SocialMediaController class.
      * Utilizes SLF4J to log relevant actions, including method entries, business decisions, and error handling.
      */
-    private static final Logger LOGGER = LoggerFactory.getLogger(MessageService.class); // Logger for MessageService
+    private static final Logger LOGGER = LoggerFactory.getLogger(MessageService.class);
 
     /**
      * Data Access Object (DAO) for handling message-related database operations.
@@ -46,8 +46,8 @@ public class MessageService {
      * Useful for dependency injection, particularly in testing scenarios where
      * mock objects might be used instead of actual database connections.
      * 
-     * @param messageDAO The MessageDAO instance to be used for message operations
-     * @param accountDAO The AccountDAO instance to be used for account validation
+     * @param messageDAO The MessageDAO instance to be used for message operations.
+     * @param accountDAO The AccountDAO instance to be used for account validation.
      */
     public MessageService(MessageDAO messageDAO, AccountDAO accountDAO) {
         this.messageDAO = messageDAO;
@@ -61,8 +61,8 @@ public class MessageService {
      * - The message text is blank
      * - The message text exceeds 255 characters
      * 
-     * @param message The Message object containing the details of the message to be created
-     * @return An Optional containing the created Message if successful, or an empty Optional if validation fails
+     * @param message The Message object containing the details of the message to be created.
+     * @return An Optional containing the created Message if successful, or an empty Optional if validation fails.
      */
     public Optional<Message> createMessage(Message message) {
         LOGGER.info("Received request to add new message to the database - MessageService.createMessage(Message message) method");
@@ -96,7 +96,7 @@ public class MessageService {
     /**
      * Retrieves all messages in the system.
      * 
-     * @return An Optional containing a List of all Messages if successful, or an empty Optional if retrieval fails
+     * @return An Optional containing a List of all Messages if successful, or an empty Optional if retrieval fails.
      */
     public Optional<List<Message>> getAllMessages() {
         LOGGER.info("Received request to retrieve all messages - MessageService.getAllMessages() method");
@@ -113,8 +113,8 @@ public class MessageService {
     /**
      * Retrieves a message by its unique identifier.
      * 
-     * @param messageId The ID of the message to retrieve
-     * @return An Optional containing the Message if found, or an empty Optional if no message exists with the given ID
+     * @param messageId The ID of the message to retrieve.
+     * @return An Optional containing the Message if found, or an empty Optional if no message exists with the given ID.
      */
     public Optional<Message> getMessageById(int messageId) {
         LOGGER.info("Received request to retrieve message with ID: {} - MessageService.getMessageById() method", messageId);
@@ -131,7 +131,7 @@ public class MessageService {
     /**
      * Deletes a message by its unique identifier.
      * 
-     * @param messageId The ID of the message to delete
+     * @param messageId The ID of the message to delete.
      */
     public void deleteMessageById(int messageId) {
         LOGGER.info("Received request to delete message with ID: {} - MessageService.deleteMessageById() method", messageId);
@@ -148,9 +148,9 @@ public class MessageService {
      * - The updated message text is blank (after trimming)
      * - The updated message text exceeds 255 characters
      * 
-     * @param messageId The ID of the message to update
-     * @param updatedMessage The new text for the message
-     * @return An Optional containing the updated Message if successful, or an empty Optional if validation fails
+     * @param messageId The ID of the message to update.
+     * @param updatedMessage The new text for the message.
+     * @return An Optional containing the updated Message if successful, or an empty Optional if validation fails.
      */
     public Optional<Message> updateMessageById(int messageId, String updatedMessage) {
         LOGGER.info("Received request to update message with ID: {} - MessageService.updateMessageById() method", messageId);
@@ -188,9 +188,9 @@ public class MessageService {
     /**
      * Retrieves all messages posted by a specific user.
      * 
-     * @param accountId The ID of the account whose messages should be retrieved
+     * @param accountId The ID of the account whose messages should be retrieved.
      * @return An Optional containing a List of Messages posted by the specified user if successful,
-     *         or an empty Optional if retrieval fails or if the user has no messages
+     *         or an empty Optional if retrieval fails or if the user has no messages.
      */
     public Optional<List<Message>> getAllMessagesByUser(int accountId) {
         LOGGER.info("Received request to retrieve all messages for user with ID: {} - MessageService.getAllMessagesByUser() method", accountId);

@@ -27,7 +27,15 @@ public class SocialMediaController {
      * Utilizes SLF4J to log relevant actions, including method entries, business decisions, and error handling.
      */
     private static final Logger logger = LoggerFactory.getLogger(SocialMediaController.class);
+
+    /**
+     * Service-layer AccountService object for handling account-related business logic.
+     */
     private AccountService accountService;
+
+    /**
+     * Service layer MessageService object for handling message-related business logic.
+     */
     private MessageService messageService;
     
     /**
@@ -108,6 +116,7 @@ public class SocialMediaController {
      * 
      * @param context The Javalin Context object provided by the Javalin app. It allows access to the HTTP request 
      *                and response, and contains the registered user account to be returned as a response.
+     * @throws BadRequestResponse If there is an error during registeration of user.
      */
     private void postUserHandler(Context context) {
         logger.info("Received request to register a new user.");
@@ -129,6 +138,7 @@ public class SocialMediaController {
      * 
      * @param context The Javalin Context object provided by the Javalin app. It allows access to the HTTP request 
      *                and response, and contains the logged-in user account to be returned as a response.
+     * @throws UnauthorizedResponse If there is an error during log in of user.
      */
     private void postLoginHandler(Context context) {
         logger.info("Received request to login a user.");
@@ -146,6 +156,7 @@ public class SocialMediaController {
      * 
      * @param context The Javalin Context object provided by the Javalin app. It allows access to the HTTP request 
      *                and response, and contains the posted message to be returned as a response.
+     * @throws BadRequestResponse If there is an error during post of message.
      */
     private void postMessageHandler(Context context) {
         logger.info("Received a request to post a message.");
@@ -164,7 +175,8 @@ public class SocialMediaController {
      * Handler to get a list of all messages at GET /messages endpoint.
      * 
      * @param context The Javalin Context object provided by the Javalin app. It allows access to the HTTP request 
-     *                and response, and contains the list of all messages to be returned as a response.
+     *                and response, and contains the list of all messages, or an empty list if there are no messages,
+     *                to be returned as a response.
      */
     private void getMessageHandler(Context context) {
         logger.info("Current directory: {}", System.getProperty("user.dir"));
@@ -179,7 +191,8 @@ public class SocialMediaController {
      * Handler to get a message by providing the message ID at GET /messages/{message_id} endpoint.
      * 
      * @param context The Javalin Context object provided by the Javalin app. It allows access to the HTTP request 
-     *                and response, and contains the message with the specified ID to be returned as a response.
+     *                and response, and contains the message with the specified ID if it existed, or an empty response body
+     *                to be returned as a response.
      */
     private void getMessageByIdHandler(Context context) {
         logger.info("Received request to get the message with ID: {}", context.pathParam("message_id"));
@@ -199,7 +212,8 @@ public class SocialMediaController {
      * Handler to delete messages by providing the message ID at DELETE /messages/{message_id} endpoint.
      * 
      * @param context The Javalin Context object provided by the Javalin app. It allows access to the HTTP request 
-     *                and response, and contains the deleted message to be returned as a response.
+     *                and response, and returns the now-deleted message if it existe, or an empty response body 
+     *                to maintain idempotency of the DELETE verb.
      */
     private void deleteMessageByIdHandler(Context context) {
         logger.info("Received request to delete the message with ID: {}", context.pathParam("message_id"));
@@ -220,6 +234,7 @@ public class SocialMediaController {
      * 
      * @param context The Javalin Context object provided by the Javalin app. It allows access to the HTTP request 
      *                and response, and contains the updated message to be returned as a response.
+     * @throws BadRequestResponse If there is an error during update of the message.
      */
     private void patchMessageByIdHandler(Context context) {
         logger.info("Received request to update the message with ID: {}", context.pathParam("message_id"));
@@ -288,7 +303,7 @@ public class SocialMediaController {
      * Example handler for an example endpoint.
      * 
      * @param context The Javalin Context object provided by the Javalin app. It allows access to the HTTP request 
-     *                and response, and contains the list of all accounts to be returned as a response.
+     *                and response, and contains a sample text JSON object to be returned as a response.
      */
     private void exampleHandler(Context context) {
         context.json("sample text");
